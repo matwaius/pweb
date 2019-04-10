@@ -1,17 +1,18 @@
 package br.unisul.pweb.repositories;
-import java.util.List;
 
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.unisul.pweb.domain.Estado;
-
+import br.unisul.pweb.domain.Cliente;
+import br.unisul.pweb.domain.Pedido;
 
 @Repository
-public interface EstadoRepository extends JpaRepository<Estado, Integer> {
-
+public interface PedidoRepository extends JpaRepository<Pedido,Integer>{
+	
 	@Transactional(readOnly=true)
-	public List<Estado> findAllByOrderByEstado();
+	List<Pedido> findByCliente(Cliente cliente);
+
 }
