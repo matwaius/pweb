@@ -22,6 +22,12 @@ public class EstadoService {
 		return obj.orElse(null);
 	}
 	
+	//BUSCAR POR NOME
+	public List<Estado> buscaPorNome(String nome)
+	{
+		return rep.findDistinctByEstadoContainingOrderByEstado(nome);
+	}
+	
 	//INSERIR
 	public Estado insert (Estado obj) {
 		obj.setId(null);
@@ -42,6 +48,6 @@ public class EstadoService {
 	
 	//LISTAR TODAS
 	public List<Estado> findAll(){
-		return rep.findAllByOrderByEstado();
+		return rep.findAll();
 	}
 }

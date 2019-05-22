@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -18,6 +19,7 @@ import br.unisul.pweb.domain.Cidade;
 import br.unisul.pweb.domain.Estado;
 import br.unisul.pweb.dtos.CidadeDTO;
 import br.unisul.pweb.dtos.EstadoDTO;
+import br.unisul.pweb.resources.Utils.URL;
 import br.unisul.pweb.services.CidadeService;
 import br.unisul.pweb.services.EstadoService;
 
@@ -75,6 +77,17 @@ public class EstadoResource {
 		}
 		return ResponseEntity.ok().body(listaDTO);
 	}
+	
+	//FILTRAR POR NOME
+	@RequestMapping(value="/filtro",method=RequestMethod.GET)
+	public ResponseEntity<List<EstadoDTO>> filtrarPorNome(
+			@RequestParam(value = "nome", defaultValue = "") String nome
+			) {
+			String nomeDecoded = URL.decodeParam(nome);
+			List<Estado> lista = service.buscaPorNome(nomeDecoded);
+			List<EstadoDTO> listaDTO = lista.stream().map(obj -> new EstadoDTO(obj)).collect(Collectors.toList()); 
+			return ResponseEntity.ok().body(listaDTO);
+		}
 	
 	//LISTAR CIDADES DE UM ESTADO
 	@RequestMapping(value="/{estadoId}/cidades", method=RequestMethod.GET)

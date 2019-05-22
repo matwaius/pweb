@@ -21,6 +21,12 @@ public class CategoriaService {
 		return obj.orElse(null);
 	}
 	
+	//BUSCAR POR NOME
+	public List<Categoria> buscaPorNome(String nome)
+	{
+		return rep.findDistinctByNomeContainingOrderByNome(nome);
+	}
+	
 	//INSERIR
 	public Categoria insert (Categoria obj) {
 		obj.setId(null);
